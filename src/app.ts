@@ -1,42 +1,33 @@
 // app.ts
-import { module, element, bootstrap } from "angular";
-import "@uirouter/angularjs";
-import { AppComponent } from "./app.component";
-import { HomeComponent } from "./home/home.component";
-import { UserComponent } from "./user/user.component";
-import { UserService } from "./services/user.services";
+import { module, element, bootstrap } from 'angular'
+import '@uirouter/angularjs'
+import { AppComponent } from './app.component'
 
-import "./app.scss";
+import './app.scss'
+import { PhoneListComponent } from './phones/phone-list.component'
 
-export let app = module("app", ["ui.router"]);
+let app = module('app', ['ui.router'])
 
 app
-  .config(($stateProvider, $urlRouterProvider) => {
-    const appState = { name: "app", url: "/app", component: AppComponent.NAME };
-    const homeState = {
-      name: "app.home",
-      url: "/home",
-      component: HomeComponent.NAME,
-    };
-    const userState = {
-      name: "app.user",
-      url: "/user?id",
-      component: UserComponent.NAME,
-    };
+	.config(($stateProvider, $urlRouterProvider) => {
+		const appState = { name: 'app', url: '/app', component: AppComponent.NAME }
 
-    $stateProvider.state(appState);
-    $stateProvider.state(homeState);
-    $stateProvider.state(userState);
+		const phoneState = {
+			name: 'phone',
+			url: '/',
+			component: PhoneListComponent.NAME,
+		}
 
-    $urlRouterProvider.otherwise("/app");
-  })
+		$stateProvider.state(phoneState)
+		$stateProvider.state(appState)
 
-  .component(AppComponent.NAME, new AppComponent())
-  .component(HomeComponent.NAME, new HomeComponent())
-  .component(UserComponent.NAME, new UserComponent())
-  .service(UserService.NAME, UserService);
+		$urlRouterProvider.otherwise('/')
+	})
+	.component(PhoneListComponent.NAME, new PhoneListComponent())
+	.component(AppComponent.NAME, new AppComponent())
+
 element(document).ready(() => {
-  bootstrap(document, ["app"]);
-});
+	bootstrap(document, ['app'])
+})
 
-export default app;
+export default app
